@@ -143,14 +143,11 @@ int IntList::count() const {
 //to this list, deleting/replacing any existing nodes
 IntList& IntList::operator=(const IntList& source){
     Node* sourceNode = source.head;
-    Node* thisNode = this->head;
 
     this->~IntList();
 
     while(sourceNode){
         (*this).push_back(sourceNode->info);
-
-        thisNode = thisNode->next;
         sourceNode = sourceNode->next;
     }
 
