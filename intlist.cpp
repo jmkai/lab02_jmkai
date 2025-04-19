@@ -19,7 +19,12 @@ IntList::IntList(const IntList& source) {
 
 // destructor deletes all nodes
 IntList::~IntList() {
-    //IMPLEMENT THIS
+    while(head){
+        Node* temp = head->next; // temporarily stores next node
+        delete head;             // deletes the head node
+        head = temp;             // sets head to the next node
+    }
+    head = nullptr;
 }
 
 // return sum of values in list
@@ -135,7 +140,20 @@ int IntList::count() const {
 //Assignment operator should copy the list from the source
 //to this list, deleting/replacing any existing nodes
 IntList& IntList::operator=(const IntList& source){
-    //IMPLEMENT
+    Node* sourceNode = source.head;
+    Node* thisNode = this->head;
+
+    while(sourceNode){
+        if(thisNode){
+            thisNode->info = sourceNode->info;
+        }
+        else{
+            (*this).push_back(sourceNode->info);
+        }
+        thisNode = thisNode->next;
+        sourceNode = sourceNode->next;
+    }
+
     return *this;
 }
 
