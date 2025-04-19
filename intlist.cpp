@@ -145,19 +145,26 @@ int IntList::count() const {
 
 //Assignment operator should copy the list from the source
 //to this list, deleting/replacing any existing nodes
-IntList& IntList::operator=(const IntList& source){
-    if(this != &source){  // check for self assignment
-        clear(); // clears existing nodes
-
-        if(source.head){
-            Node* curr = source.head;
-            while(curr){
-                this->push_back(curr->info);
-                curr = curr->next;
-            }
+IntList& IntList::operator=(const IntList& source) {
+    if (this != &source) {
+        // First make a copy safely
+        Node* newHead = nullptr;
+        Node** newTail = &newHead;  // Pointer to the current tail pointer
+        
+        Node* curr = source.head;
+        while (curr) {
+            *newTail = new Node;
+            (*newTail)->info = curr->info;
+            newTail = &((*newTail)->next);
+            curr = curr->next;
         }
+        
+        // Only after successful copy, clear old data
+        clear();
+        
+        // Take ownership of new copy
+        head = newHead;
     }
-
     return *this;
 }
 
