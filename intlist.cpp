@@ -145,13 +145,11 @@ IntList& IntList::operator=(const IntList& source){
     Node* sourceNode = source.head;
     Node* thisNode = this->head;
 
+    this->~IntList();
+
     while(sourceNode){
-        if(thisNode){
-            thisNode->info = sourceNode->info;
-        }
-        else{
-            (*this).push_back(sourceNode->info);
-        }
+        (*this).push_back(sourceNode->info);
+
         thisNode = thisNode->next;
         sourceNode = sourceNode->next;
     }
